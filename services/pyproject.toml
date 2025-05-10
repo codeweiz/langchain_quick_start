@@ -1,0 +1,14 @@
+[project]
+name = "services"
+version = "0.1.0"
+description = "业务服务层，基于 core 能力实现具体业务逻辑。"
+requires-python = ">=3.9"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0"
+] 
