@@ -10,6 +10,8 @@ from core.embeddiings.huggingface_embedding import get_huggingface_embedding
 
 
 # 使用文档加载器、嵌入模型和向量数据库，基于 PDF 构建一个语义搜索引擎
+
+# 测试 Document
 def test_document():
     documents = [
         Document(

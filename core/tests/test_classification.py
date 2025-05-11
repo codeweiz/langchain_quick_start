@@ -7,6 +7,8 @@ from core.llm.deepseek import get_deepseek_chat_model
 
 
 # 文本分类与结构化输出
+
+# 测试文本分类与结构化输出
 def test_classification():
     # 获取 deepseek chat LLM
     model: BaseChatModel = get_deepseek_chat_model()
