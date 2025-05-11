@@ -4,7 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from core.llm.deepseek import get_deepseek_chat_model
 
 
-# 校验 deepseek 模型
+# 使用 提示模板 和 聊天模型 构建一个简单的大语言模型应用程序
 def test_get_deepseek_chat_model():
     model = get_deepseek_chat_model()
 

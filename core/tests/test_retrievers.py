@@ -2,19 +2,14 @@ from typing import List
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
-from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import chain
-from langchain_core.runnables.utils import Output
 from langchain_core.vectorstores import InMemoryVectorStore
-from langchain_text_splitters import TextSplitter, RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from core.embeddiings.huggingface_embedding import get_huggingface_embedding
-from core.llm.deepseek import get_deepseek_chat_model
-from core.retrievers.similarity_retriever import similarity_retriever
 
 
-# 校验文档 document
+# 使用文档加载器、嵌入模型和向量数据库，基于 PDF 构建一个语义搜索引擎
 def test_document():
     documents = [
         Document(
