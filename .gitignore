@@ -11,3 +11,4 @@ wheels/
 .idea
 .cursor
 .env
+**/.langchain.db
