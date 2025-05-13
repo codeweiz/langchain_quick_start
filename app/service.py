@@ -1,3 +1,5 @@
+import json
+
 from app.domain.models import PullRequest, Diff, Commit
 from app.infrastructure.git.github import GitHubDiffFetcher
 from typing import Tuple, List
@@ -18,7 +20,7 @@ class CodeReviewService:
         :return: (Diff, Commit 列表)
         """
         diff = self.diff_fetcher.fetch_diff(pr)
-        print(f"\ndiff:{diff}")
+        print(f"\ndiff:{diff.to_dict()}")
         commits = self.diff_fetcher.fetch_commits(pr)
-        print(f"\ncommits:{commits}")
+        print(f"\ncommits:{[c.to_dict() for c in commits]}")
         return diff, commits

@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+
 class PullRequest:
     """
     PR/MR 基本信息
@@ -9,6 +10,7 @@ class PullRequest:
     :param title: 标题
     :param description: 描述
     """
+
     def __init__(self, repo: str, pr_id: int, author: str, title: str, description: str):
         self.repo = repo
         self.pr_id = pr_id
@@ -16,15 +18,24 @@ class PullRequest:
         self.title = title
         self.description = description
 
+
 class Diff:
     """
     PR/MR 变更内容
     :param files: 变更文件列表
     :param patch: diff/patch 内容
     """
+
     def __init__(self, files: List[str], patch: str):
         self.files = files
         self.patch = patch
+
+    def to_dict(self):
+        return {
+            "files": self.files,
+            "patch": self.patch
+        }
+
 
 class Commit:
     """
@@ -33,10 +44,19 @@ class Commit:
     :param message: commit message
     :param author: 作者
     """
+
     def __init__(self, sha: str, message: str, author: str):
         self.sha = sha
         self.message = message
         self.author = author
+
+    def to_dict(self):
+        return {
+            "sha": self.sha,
+            "message": self.message,
+            "author": self.author
+        }
+
 
 class ReviewResult:
     """
@@ -44,6 +64,7 @@ class ReviewResult:
     :param summary: 总结
     :param suggestions: 建议列表
     """
+
     def __init__(self, summary: str, suggestions: Optional[List[str]] = None):
         self.summary = summary
-        self.suggestions = suggestions or [] 
+        self.suggestions = suggestions or []
