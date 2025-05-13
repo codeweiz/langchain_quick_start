@@ -2,10 +2,12 @@ from app.domain.models import PullRequest, Diff, Commit
 from app.infrastructure.git.github import GitHubDiffFetcher
 from typing import Tuple, List
 
+
 class CodeReviewService:
     """
     代码审查主流程服务
     """
+
     def __init__(self, diff_fetcher: GitHubDiffFetcher):
         self.diff_fetcher = diff_fetcher
 
@@ -16,5 +18,7 @@ class CodeReviewService:
         :return: (Diff, Commit 列表)
         """
         diff = self.diff_fetcher.fetch_diff(pr)
+        print(f"\ndiff:{diff}")
         commits = self.diff_fetcher.fetch_commits(pr)
+        print(f"\ncommits:{commits}")
         return diff, commits

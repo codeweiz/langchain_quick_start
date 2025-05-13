@@ -9,12 +9,15 @@ app = FastAPI()
 diff_fetcher = GitHubDiffFetcher()
 review_service = CodeReviewService(diff_fetcher)
 
+
 @app.post("/webhook")
 async def webhook_listener(request: Request):
     """
     Webhook 事件监听入口，支持 GitHub PR/MR 相关事件。
     """
     event_body = await request.json()
+    print("[Webhook] 收到事件:", event_body)
+
     # 这里只处理 GitHub PR 事件（opened/synchronize）
     action = event_body.get("action")
     pr_data = event_body.get("pull_request")
@@ -29,6 +32,7 @@ async def webhook_listener(request: Request):
         title=pr_data["title"],
         description=pr_data.get("body", "")
     )
+    print(f"\npr:{pr}")
     diff, commits = review_service.review_pr(pr)
     # 这里只返回文件列表和 commit 数量，后续可扩展为 LLM 分析
     return JSONResponse(content={
