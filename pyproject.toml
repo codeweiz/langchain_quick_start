@@ -7,6 +7,7 @@ requires-python = ">=3.9"
 dependencies = [
     "pytest>=8.3.5",
     "pytest-asyncio>=0.26.0",
+    "uvicorn>=0.29.0",
 ]
 
 [tool.uv.workspace]
@@ -14,4 +15,4 @@ members = [
     "core",
     "services",
     "config"
-]
+, "app"]

@@ -1,0 +1,31 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = "应用层"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "langchain>=0.3.25",
+    "uvicorn>=0.29.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.7.1",
+    "python-dotenv>=1.0.1",
+    "requests>=2.31.0",
+    "typing-extensions>=4.11.0",
+    "fastapi>=0.115.12",
+]
+
+[tool.black]
+line-length = 88
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+
+[tool.ruff]
+line-length = 88
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.2.0",
+]
