@@ -12,3 +12,4 @@ wheels/
 .cursor
 .env
 **/.langchain.db
+uv.lock
