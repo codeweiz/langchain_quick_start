@@ -35,6 +35,7 @@ langchain_quick_start/
 - 依赖管理推荐用 [uv](https://github.com/astral-sh/uv)：
 
 ```bash
+uv pip install -e ./app
 uv pip install -e ./config
 uv pip install -e ./core
 uv pip install -e ./services
@@ -53,7 +54,7 @@ DEEPSEEK_API_KEY=你的API密钥
 ## 运行说明
 
 ```bash
-python main.py
+uvicorn app.main:app --reload
 ```
 
 ## 测试说明
