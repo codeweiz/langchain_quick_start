@@ -21,8 +21,6 @@ class CodeReviewService:
         :return: (Diff, Commit 列表, ReviewResult)
         """
         diff = self.diff_fetcher.fetch_diff(pr)
-        print(f"\ndiff:{diff.to_dict()}")
         commits = self.diff_fetcher.fetch_commits(pr)
-        print(f"\ncommits:{[c.to_dict() for c in commits]}")
         review_result = self.quality_checker.check_quality(diff)
         return diff, commits, review_result

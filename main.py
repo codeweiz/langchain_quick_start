@@ -41,9 +41,12 @@ async def webhook_listener(request: Request):
     # 自动评论到 PR
     # feedback_sender.send_feedback(pr, review_result)
     # 这里只返回文件列表和 commit 数量，后续可扩展为 LLM 分析
-    return JSONResponse(content={
+    response = JSONResponse(content={
         "files": diff.files,
         "commit_count": len(commits),
         "review_summary": review_result.summary,
         "review_suggestions": review_result.suggestions
     }, status_code=200)
+
+    print(f"response: {response}")
+    return response
