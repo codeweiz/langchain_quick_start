@@ -13,3 +13,4 @@ wheels/
 .env
 **/.langchain.db
 uv.lock
+**/*.egg-info/**

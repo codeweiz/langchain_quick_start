@@ -35,9 +35,7 @@ langchain_quick_start/
 - 依赖管理推荐用 [uv](https://github.com/astral-sh/uv)：
 
 ```bash
-uv pip install -e ./config
-uv pip install -e ./core
-uv pip install -e ./services
+uv pip install
 ```
 
 - 跨包 import 直接用包名（如 from core.llm.deepseek import ...），无需相对路径。
@@ -53,7 +51,7 @@ DEEPSEEK_API_KEY=你的API密钥
 ## 运行说明
 
 ```bash
-python main.py
+uvicorn app.main:app --reload
 ```
 
 ## 测试说明
@@ -65,48 +63,10 @@ python main.py
   ```
 - 或在根目录用：
   ```bash
-  pytest core/tests/
+  pytest common/tests/
   pytest services/tests/
   pytest config/tests/
   ```
-
-## 主要接口示例
-
-- 记忆对话示例：
-```python
-from services.memory import memory_chat
-memory_chat("你好，我是 Bob")
-memory_chat("我的名字叫什么？")
-```
-
-- deepseek-chat 模型获取示例：
-```python
-from core.llm.deepseek import get_deepseek_chat_model
-model = get_deepseek_chat_model()
-```
-
-- 配置读取示例：
-```python
-from config.settings import settings
-print(settings.DEEPSEEK_API_KEY)
-```
-
-- main.py 推荐写法：
-```python
-from services.memory import memory_chat
-from core.llm.deepseek import get_deepseek_chat_model
-from config.settings import settings
-
-def main():
-    print(f"DEEPSEEK_API_KEY: {settings.DEEPSEEK_API_KEY}")
-    memory_chat("你好，我是 Bob")
-    memory_chat("我的名字叫什么？")
-    model = get_deepseek_chat_model()
-    print("模型实例：", model)
-
-if __name__ == "__main__":
-    main()
-```
 
 ## 说明
 
