@@ -36,10 +36,10 @@ async def webhook_listener(request: Request):
         title=pr_data["title"],
         description=pr_data.get("body", "")
     )
-    print(f"\npr:{pr}")
+
     diff, commits, review_result = review_service.review_pr(pr)
     # 自动评论到 PR
-    feedback_sender.send_feedback(pr, review_result)
+    # feedback_sender.send_feedback(pr, review_result)
     # 这里只返回文件列表和 commit 数量，后续可扩展为 LLM 分析
     return JSONResponse(content={
         "files": diff.files,
