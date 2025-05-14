@@ -1,12 +1,12 @@
-import json
-
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import JSONResponse
+
 from app.domain.models import PullRequest
-from app.service.git.github import GitHubDiffFetcher
 from app.llm_checker.langchain_checker import LangChainQualityChecker
 from app.service.feedback.github_feedback import GitHubFeedbackSender
+from app.service.git.github import GitHubDiffFetcher
 from app.service.service import CodeReviewService
+from dotenv import load_dotenv
 
 app = FastAPI()
 
@@ -14,10 +14,20 @@ diff_fetcher = GitHubDiffFetcher()
 quality_checker = LangChainQualityChecker()
 review_service = CodeReviewService(diff_fetcher, quality_checker)
 feedback_sender = GitHubFeedbackSender()
+load_dotenv()
+
+# 异步执行 review 和 feedback
+def process_review_and_feedback(pr: PullRequest):
+    diff, commits, review_result = review_service.review_pr(pr)
+    feedback_sender.send_feedback(pr, review_result)
+    # 可选：日志输出
+    print(f"[Review] files: {diff.files}, commit_count: {len(commits)}")
+    print(f"[Review] summary: {review_result.summary}")
+    print(f"[Review] suggestions: {review_result.suggestions}")
 
 
 @app.post("/webhook")
-async def webhook_listener(request: Request):
+async def webhook_listener(request: Request, background_tasks: BackgroundTasks):
     """
     Webhook 事件监听入口，支持 GitHub PR/MR 相关事件。
     """
@@ -38,23 +48,6 @@ async def webhook_listener(request: Request):
         title=pr_data["title"],
         description=pr_data.get("body", "")
     )
-
-    diff, commits, review_result = review_service.review_pr(pr)
-    # 自动评论到 PR
-    # feedback_sender.send_feedback(pr, review_result)
-    # 这里只返回文件列表和 commit 数量，后续可扩展为 LLM 分析
-    response = JSONResponse(content={
-        "files": diff.files,
-        "commit_count": len(commits),
-        "review_summary": review_result.summary,
-        "review_suggestions": review_result.suggestions
-    }, status_code=200)
-
-    response_data = {
-        "files": diff.files,
-        "commit_count": len(commits),
-        "review_summary": review_result.summary,
-        "review_suggestions": review_result.suggestions
-    }
-    print(f"\nresponse content: {json.dumps(response_data, indent=2)}")
-    return response
+    # 后台异步执行耗时任务
+    background_tasks.add_task(process_review_and_feedback, pr)
+    return JSONResponse(content={"msg": "已接收，后台处理中"}, status_code=200)
