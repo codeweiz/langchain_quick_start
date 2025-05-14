@@ -6,7 +6,7 @@ from langchain_core.runnables import chain
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from common.embeddiings.huggingface_embedding import get_huggingface_embedding
+from common.embeddings.huggingface_embedding import get_huggingface_embedding
 
 
 # 使用文档加载器、嵌入模型和向量数据库，基于 PDF 构建一个语义搜索引擎
