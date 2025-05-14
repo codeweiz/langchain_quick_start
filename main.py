@@ -7,6 +7,7 @@ from app.service.feedback.github_feedback import GitHubFeedbackSender
 from app.service.git.github import GitHubDiffFetcher
 from app.service.service import CodeReviewService
 from dotenv import load_dotenv
+from app.llm_tools.agent_pr_review import review_pr_with_agent
 
 app = FastAPI()
 
@@ -34,20 +35,14 @@ async def webhook_listener(request: Request, background_tasks: BackgroundTasks):
     event_body = await request.json()
     print("[Webhook] 收到事件:", event_body)
 
-    # 这里只处理 GitHub PR 事件（opened/synchronize）
-    action = event_body.get("action")
     pr_data = event_body.get("pull_request")
     repo_data = event_body.get("repository")
     if not pr_data or not repo_data:
         return JSONResponse(content={"msg": "非 PR 事件，忽略"}, status_code=200)
 
-    pr = PullRequest(
-        repo=f"{repo_data['owner']['login']}/{repo_data['name']}",
-        pr_id=pr_data["number"],
-        author=pr_data["user"]["login"],
-        title=pr_data["title"],
-        description=pr_data.get("body", "")
-    )
-    # 后台异步执行耗时任务
-    background_tasks.add_task(process_review_and_feedback, pr)
-    return JSONResponse(content={"msg": "已接收，后台处理中"}, status_code=200)
+    repo = repo_data["full_name"]  # owner/repo
+    pr_number = pr_data["number"]
+
+    # 启动 Agent 自动审查
+    background_tasks.add_task(review_pr_with_agent, repo, pr_number)
+    return JSONResponse(content={"msg": "已接收，Agent 正在后台自动审查 PR"}, status_code=200)
