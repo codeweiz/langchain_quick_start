@@ -1,3 +1,5 @@
+import json
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from app.domain.models import PullRequest
@@ -48,5 +50,11 @@ async def webhook_listener(request: Request):
         "review_suggestions": review_result.suggestions
     }, status_code=200)
 
-    print(f"response: {response}")
+    response_data = {
+        "files": diff.files,
+        "commit_count": len(commits),
+        "review_summary": review_result.summary,
+        "review_suggestions": review_result.suggestions
+    }
+    print(f"\nresponse content: {json.dumps(response_data, indent=2)}")
     return response
