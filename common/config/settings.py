@@ -16,5 +16,8 @@ class Settings:
     # DeepSeep API KEY
     DEEPSEEK_API_KEY: str = os.getenv("DEEPSEEK_API_KEY", "")
 
+    # GITHUB TOKEN
+    GITHUB_TOKEN: str = os.getenv("GITHUB_TOKEN", "")
+
 
 settings = Settings()
