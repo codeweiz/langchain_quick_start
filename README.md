@@ -16,7 +16,6 @@
 ```
 langchain_quick_start/
 ├── app/
-│   ├── main.py                  # FastAPI Webhook 入口
 │   ├── domain/                  # 领域模型与接口
 │   ├── service/                 # 主流程、GitHub、反馈等实现
 │   └── llm_checker/             # LLM 质量分析与 prompt
@@ -26,6 +25,7 @@ langchain_quick_start/
 ├── .env                         # 环境变量
 ├── pyproject.toml               # 依赖管理
 ├── README.md
+├── main.py                      # FastAPI Webhook 入口
 ```
 
 ---
