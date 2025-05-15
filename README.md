@@ -35,7 +35,7 @@ langchain_quick_start/
 推荐使用 [uv](https://github.com/astral-sh/uv)：
 
 ```bash
-uv pip install
+uv pip install pyproject.toml
 ```
 
 ---
