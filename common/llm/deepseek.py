@@ -7,6 +7,8 @@ from langchain_core.language_models import BaseChatModel
 from common.config.settings import settings
 
 
+
+
 def get_deepseek_chat_model(model_name: str = "deepseek-chat") -> Union[BaseChatModel, _ConfigurableModel]:
     """
     获取 deepseek-chat 模型实例。
