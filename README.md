@@ -75,9 +75,3 @@ uvicorn main:app --reload
 - 支持 LangChain Tool 封装 GitHub 能力，便于智能体扩展
 
 ---
-
-## TODO
-- [ ] 支持更多平台（如 GitLab）
-- [ ] LLM 质量分析异步化/多模型切换
-- [ ] LangChain Tool/Agent 智能体集成
-- [ ] 单元测试与覆盖率提升
