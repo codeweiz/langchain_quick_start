@@ -19,6 +19,13 @@ def test_custom_chat_model():
     response = model.invoke("hello")
     print(f"\nresponse: {response}")
 
+    response = model.invoke("hello")
+    print(f"\nresponse: {response}")
+    response = model.invoke("hello")
+    print(f"\nresponse: {response}")
+    response = model.invoke("hello")
+    print(f"\nresponse: {response}")
+
     response = model.batch(["hello", "goodbye"])
     print(f"\nresponse: {response}\n")
 
