@@ -1,4 +1,4 @@
-# LangChain PR 代码质量自动审查 MVP
+# LangChain PR 代码质量自动审查
 
 ## 项目简介
 
